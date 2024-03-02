@@ -1,0 +1,29 @@
+-- PROBLEM : 
+
+Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is less than 137.2345 . Round your answer to decimal places.
++-------------+------------+
+| Field       |   Type     |
++-------------+------------+
+| ID          | NUMBER     |
+| CITY        | VARCHAR(21)|
+| STATE       | VARCHAR(2) |
+| LAT_N       | NUMBER     |
+| LONG_W      | NUMBER     |
++-------------+------------+
+
+-- SOLUTION : 
+
+SELECT ROUND(LONG_W, 4) 
+FROM STATION
+WHERE LAT_N = (
+    SELECT MAX(LAT_N)
+    FROM STATION
+    WHERE LAT_N < 137.2345
+)
+
+-- ANOTHER SOLUTION : 
+
+SELECT TOP 1 CONVERT(DECIMAL(15,4),LONG_W) 
+FROM STATION 
+WHERE LAT_N<137.2345 
+ORDER BY LAT_N DESC

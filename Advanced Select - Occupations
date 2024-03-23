@@ -1,0 +1,27 @@
+-- PROBLEM : 
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation.
+The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+
+Note: Print NULL when there are no more names corresponding to an occupation.
+
+The OCCUPATIONS table is described as follows:
+
++-------------+-----------+
+|    COLUMN   |   Type    |
++-------------+-----------+
+| NAME        | STING     |
+| OCCUPATION  | STRING    |
++-------------+-----------+
+
+Occupation will only contain one of the following values: Doctor, Professor, Singer or Actor.
+
+-- SOLUTION : ( MS SQL SERVER ) 
+
+WITH CTE AS (
+    SELECT  ROW_NUMBER() OVER (PARTITION BY OCCUPATION ORDER BY NAME ) AS RN , *
+    FROM OCCUPATIONS )
+SELECT Doctor, Professor, Singer, Actor 
+FROM CTE PIVOT ( MAX(NAME)FOR OCCUPATION IN (Doctor, Professor, Singer, Actor) ) AS PV 
+
+
+

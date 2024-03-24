@@ -1,0 +1,33 @@
+-- problem : 
+
+You are given a table, BST, containing two columns: N and P, where N represents the value of a node in Binary Tree, and P is the parent of N.
+
++--------+--------+
+| COLUMN |  Type  |
++--------+--------+
+| P      | int    |
+| N      | int    |
++--------+--------+
+
+Write a query to find the node type of Binary Tree ordered by the value of the node. Output one of the following for each node:
+
+Root: If node is root node.
+Leaf: If node is leaf node.
+Inner: If node is neither root nor leaf node.
+
+        1          <- Root
+       /   \
+      2     3
+     / \   / \
+    4   5 6   7    <- Leaves
+
+-- solution ( MS SQL server ) : 
+
+SELECT N , 
+CASE 
+WHEN P IS NULL THEN 'Root'
+WHEN N IN (SELECT P FROM BST) THEN 'Inner'
+ELSE 'Leaf'
+END 
+FROM BST 
+ORDER BY n ;
